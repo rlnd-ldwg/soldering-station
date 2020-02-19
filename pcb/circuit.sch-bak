@@ -1,0 +1,82 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L MCU_Module:Arduino_Nano_v3.x A?
+U 1 1 5E4D681D
+P 6550 3500
+F 0 "A?" H 6550 2411 50  0000 C CNN
+F 1 "Arduino_Nano_v3.x" H 6550 2320 50  0000 C CNN
+F 2 "Module:Arduino_Nano" H 6700 2550 50  0001 L CNN
+F 3 "http://www.mouser.com/pdfdocs/Gravitech_Arduino_Nano3_0.pdf" H 6550 2500 50  0001 C CNN
+	1    6550 3500
+	1    0    0    -1  
+$EndComp
+$Comp
+L 4xxx:4050 U?
+U 1 1 5E4D7F80
+P 8500 1850
+F 0 "U?" H 8500 2167 50  0000 C CNN
+F 1 "4050" H 8500 2076 50  0000 C CNN
+F 2 "" H 8500 1850 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/intersil/documents/cd40/cd4050bms.pdf" H 8500 1850 50  0001 C CNN
+	1    8500 1850
+	1    0    0    -1  
+$EndComp
+$Comp
+L 4xxx:4050 U?
+U 2 1 5E4D891D
+P 8550 2400
+F 0 "U?" H 8550 2717 50  0000 C CNN
+F 1 "4050" H 8550 2626 50  0000 C CNN
+F 2 "" H 8550 2400 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/intersil/documents/cd40/cd4050bms.pdf" H 8550 2400 50  0001 C CNN
+	2    8550 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L 4xxx:4050 U?
+U 3 1 5E4D9A59
+P 8550 2950
+F 0 "U?" H 8550 3267 50  0000 C CNN
+F 1 "4050" H 8550 3176 50  0000 C CNN
+F 2 "" H 8550 2950 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/intersil/documents/cd40/cd4050bms.pdf" H 8550 2950 50  0001 C CNN
+	3    8550 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L 4xxx:4050 U?
+U 4 1 5E4DA910
+P 8500 3550
+F 0 "U?" H 8500 3867 50  0000 C CNN
+F 1 "4050" H 8500 3776 50  0000 C CNN
+F 2 "" H 8500 3550 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/intersil/documents/cd40/cd4050bms.pdf" H 8500 3550 50  0001 C CNN
+	4    8500 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L 4xxx:4050 U?
+U 5 1 5E4DB4A0
+P 8500 4050
+F 0 "U?" H 8500 4367 50  0000 C CNN
+F 1 "4050" H 8500 4276 50  0000 C CNN
+F 2 "" H 8500 4050 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/intersil/documents/cd40/cd4050bms.pdf" H 8500 4050 50  0001 C CNN
+	5    8500 4050
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC
