@@ -2,7 +2,9 @@
 #define EE_VERSION      31
 #define EEPROM_CHECK	42
 
-#define BAR_HEIGHT       4 //Should be no bigger than 5
+#define BAR_HEIGHT       3 //Should be no bigger than 5
+
+#define HARDWARE_DEFINED_TFT    1
 
 /*
  * TIPS ARE SPECIFIED FOR 450 DEGREE MAX
@@ -13,7 +15,7 @@
 #define TEMP_STBY   150
 #define TEMP_COLD   (adc_offset + 15)
 
-#define SHUTOFF_ACTIVE
+#define SHUTOFF_ACTIVE  1
 #define BOOTHEAT_ACTIVE
 
 #define STANDBY_TIMEOUT 240 // seconds without any significant temperature drop, if exceeded it will standby
@@ -45,7 +47,7 @@
 #define POWER       12 	// ist gar nicht belegt ?! //use MISO PULLUP as switch
 //      SCK         13	// ist belegt fehlt ?!
 #define TEMP_SENSE  A0
-#define STBY_NO     A1	// auch nicht belegt ?!
+#define STBY_NO     A4	// auch nicht belegt ?!
 #define BAT_C3		A1	//      A2
 #define BAT_C2      A2
 #define BAT_C1      A3

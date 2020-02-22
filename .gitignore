@@ -17,3 +17,18 @@ Makefile
 *.lo
 *.o
 *.obj
+
+# platformio
+.pio
+.clang_complete
+.gcc-flags.json
+
+# Apple
+.DS_Store
+# LibreOffice
+*.ods
+.~lock*
+# KiCAD
+*-bak
+*fp-info-cache
+*-cache.lib

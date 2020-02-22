@@ -100,7 +100,7 @@ void setup(void) {
 	pinMode(SW_STBY, INPUT_PULLUP);
 	pinMode(TFT_CS, OUTPUT);
 	digitalWrite(TFT_CS, HIGH);
-	Serial.begin(115200);
+	//Serial.begin(115200);
 
 	boolean force_menu = false;
 	if (EEPROM.read(0) != EEPROM_CHECK) {
@@ -942,9 +942,11 @@ void loop(void) {
 		Serial.print(";");
 		Serial.println(v);
 #endif
-		Serial.flush();
+//		Serial.flush();
 		display();
 	}
+
+#ifdef Serial
 	if (Serial.available()) {
 		uint16_t t = 0;
 		switch (Serial.read()) {
@@ -986,12 +988,14 @@ void loop(void) {
 				break;
 		}
 	}
+#endif
 	delay(DELAY_MAIN_LOOP);
 	if (power_down) {
 		powerDown();
 	}
 }
 
+#ifdef SERIAL
 uint16_t serialReadTemp() {
 	uint16_t t;
 	uint8_t n;
@@ -1003,3 +1007,4 @@ uint16_t serialReadTemp() {
 	t += min(9, max(0, n))*1;
 	return t;
 }
+#endif
