@@ -18,7 +18,7 @@
  * Cut reset trace (on THT on upper layer/0R), connect STBY_NO (A1) with reset of TFT (at 4050).
  * See also readme in mechanical folder for reference.
  */
-//#define USE_TFT_RESET
+#define USE_TFT_RESET
 
 /*
  * If red is blue and blue is red change this
