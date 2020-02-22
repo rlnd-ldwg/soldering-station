@@ -10,13 +10,13 @@
  * Cut reset trace (on THT on upper layer/0R), connect STBY_NO (A1) with reset of TFT (at 4050).
  * See also readme in mechanical folder for reference.
  */
-//#define USE_TFT_RESET
+#define USE_TFT_RESET
 
 /*
  * If red is blue and blue is red change this
  * If not sure, leave commented, you will be shown a setup screen
  */
-//#define HARDWARE_DEFINED_TFT 2
+#define HARDWARE_DEFINED_TFT 1
 /*
  * Based on your Hardware-Revision there may be modifications to the PCB.
  * In V3 and up is a second voltage measurement circuit.

@@ -4,8 +4,6 @@
 
 #define BAR_HEIGHT       3 //Should be no bigger than 5
 
-#define HARDWARE_DEFINED_TFT    1
-
 /*
  * TIPS ARE SPECIFIED FOR 450 DEGREE MAX
  * If read 1023 on Analog in, the tip is turned off automatically
@@ -47,10 +45,10 @@
 #define POWER       12 	// ist gar nicht belegt ?! //use MISO PULLUP as switch
 //      SCK         13	// ist belegt fehlt ?!
 #define TEMP_SENSE  A0
-#define STBY_NO     A4	// auch nicht belegt ?!
+#define STBY_NO    8	// A1 auch nicht belegt ?! => knn für TFT Reset verwendet werden -> USE_TFT_RESET
 #define BAT_C3		A1	//      A2
-#define BAT_C2      A2
-#define BAT_C1      A3
+#define BAT_C2      A2  //      A3
+#define BAT_C1      A3  //      A4
 #define TFT_DC		9	//      A5
 #ifdef PIN_A7
 #define CHARGEDET   A6

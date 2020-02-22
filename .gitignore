@@ -26,7 +26,7 @@ Makefile
 # Apple
 .DS_Store
 # LibreOffice
-*.ods
+# *.ods
 .~lock*
 # KiCAD
 *-bak
