@@ -2,7 +2,7 @@
 #define EE_VERSION      31
 #define EEPROM_CHECK	42
 
-#define BAR_HEIGHT       3 //Should be no bigger than 5
+#define BAR_HEIGHT       4 //Should be no bigger than 5
 
 /*
  * TIPS ARE SPECIFIED FOR 450 DEGREE MAX
@@ -13,7 +13,7 @@
 #define TEMP_STBY   150
 #define TEMP_COLD   (adc_offset + 15)
 
-#define SHUTOFF_ACTIVE  1
+#define SHUTOFF_ACTIVE
 #define BOOTHEAT_ACTIVE
 
 #define STANDBY_TIMEOUT 240 // seconds without any significant temperature drop, if exceeded it will standby
@@ -28,28 +28,25 @@
 //Time in that the temperature must rise by the set temperature
 #define TEMP_RISE_TIME      1000
 
-//#define OLD_PWM
-
-//      RX          0
-//      TX          1
-#define SW_STBY		6	// Power     2
-#define HEATER_PWM	3
-#define SW_DOWN		5	//     4
-#define HEAT_LED	7	//    5
-#define SW_UP		4	//       6
-#define SW_T3		0	//       7
-#define SW_T2		1	//       8
-#define SW_T1		2	//       9
-#define TFT_CS		10
-//      MOSI        11
-#define POWER       12 	// ist gar nicht belegt ?! //use MISO PULLUP as switch
-//      SCK         13	// ist belegt fehlt ?!
-#define TEMP_SENSE  A0
-#define STBY_NO    8	// A1 auch nicht belegt ?! => knn für TFT Reset verwendet werden -> USE_TFT_RESET
-#define BAT_C3		A1	//      A2
-#define BAT_C2      A2  //      A3
-#define BAT_C1      A3  //      A4
-#define TFT_DC		9	//      A5
+#define SW_T3       0
+#define SW_T2       1
+#define SW_T1       6
+#define HEATER_PWM  3
+#define SW_UP       4
+#define RE_DT 		4
+#define SW_DOWN     5
+#define RE_CLK 		5
+#define SW_STBY     2
+#define NEOPIXEL	7
+#define HEAT_LED	7
+#define STBY_NO		8
+#define TFT_DC      9
+#define TFT_CS      10
+#define POWER       12
+#define TEMP_SENSE	A0
+#define BAT_C3      A1
+#define BAT_C2      A2
+#define BAT_C1      A3
 #ifdef PIN_A7
 #define CHARGEDET   A6
 #define VIN         A7
@@ -81,7 +78,6 @@
 #define REF_T1          275
 #define REF_T2          410
 #define DELTA_REF_T     (REF_T2 - REF_T1)
-
 
 typedef enum POWER_SOURCE {
 	NO_INIT,
