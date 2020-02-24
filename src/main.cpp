@@ -9,9 +9,9 @@
 #include <Adafruit_SSD1306.h>
 #include "definitions.h"
 
-#define USE_SSD1306
+//#define USE_SSD1306
 //#define USE_NEOPIXEL
-//#define SERIAL
+//#define USE_SERIAL
 
 /*
  * If your display stays white, uncomment this.
@@ -818,7 +818,7 @@ void setup(void) {
 	pinMode(STBY_NO, INPUT_PULLUP);
 	pinMode(TFT_CS, OUTPUT);
 	digitalWrite(TFT_CS, HIGH);
-#ifdef SERIAL
+#ifdef USE_SERIAL
 	Serial.begin(115200);
 #endif
 	boolean force_menu = false;
@@ -1101,7 +1101,7 @@ int main(void) {
 #else
 			tft_display();
 #endif
-#ifdef SERIAL
+#ifdef USE_SERIAL
 			Serial.print(stored[0]);
 			Serial.print(";");
 			Serial.print(stored[1]);
