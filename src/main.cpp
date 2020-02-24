@@ -9,9 +9,10 @@
 #include <Adafruit_SSD1306.h>
 #include "definitions.h"
 
-//#define USE_SSD1306
-//#define USE_NEOPIXEL
+#define USE_SSD1306
+#define USE_NEOPIXEL
 //#define USE_SERIAL
+//#define USE_LIPO
 
 /*
  * If your display stays white, uncomment this.
@@ -100,6 +101,7 @@ PID heaterPID(&cur_td, &pid_val, &set_td, kp, ki, kd, DIRECT);
 #define OLED_SCREEN_WIDTH	128
 #define OLED_SCREEN_HEIGHT	32
 #define OLED_SCREEN_OFFSET 	32
+#define OLED_SCREEN_DIVIDER	1
 #define OLED_RESET 			4
 #define OLED_ADDR 			0x3C
 
@@ -531,11 +533,13 @@ void timer_isr(void) {
 	}
 	cnt_sw_poll++;
 
+#ifdef USE_LIPO
 	if(cnt_measure_voltage >= TIME_MEASURE_VOLTAGE_IN_MS) {
 		measureVoltage();
 		cnt_measure_voltage=0;
 	}
 	cnt_measure_voltage++;
+#endif
 }
 
 void powerDown(void) {
@@ -707,6 +711,7 @@ void tft_display(void) {
 		}
 		cur_t_old = temperature;
 	}
+#ifdef USE_LIPO
 	if (v_c3 > 1.0) {
 		tft.setTextColor(TFT_YELLOW, TFT_BLACK);
 		tft.setCursor(122,5);
@@ -766,6 +771,7 @@ void tft_display(void) {
 			}
 		}
 	}
+#endif
 #ifdef SHUTOFF_ACTIVE
 	if (autopower) {
 		if (!stby_layoff) {
@@ -797,6 +803,7 @@ void tft_display(void) {
 }
 
 void setup(void) {
+	//analogReference(EXTERNAL);
 	digitalWrite(HEATER_PWM, LOW);
 	pinMode(HEATER_PWM, OUTPUT);
 	pinMode(POWER, INPUT_PULLUP);
@@ -868,7 +875,7 @@ void setup(void) {
 		}
 		tft.fillScreen(TFT_BLACK);
 		tft.setTextColor(TFT_YELLOW);
-		tft.drawBitmap(0, 20, maiskolben, 160, 64, YELLOW);
+		//tft.drawBitmap(0, 20, maiskolben, 160, 64, YELLOW);
 		tft.setCursor(20,86);
 		tft.setTextColor(TFT_YELLOW);
 		tft.setTextSize(2);
@@ -927,11 +934,11 @@ void setup(void) {
 			}
 			delay(50);
 		}
-		/*EEPROM.update(EEPROM_OPTIONS,  (fahrenheit << 2) | (bootheat << 1) | autopower);
+		EEPROM.update(EEPROM_OPTIONS,  (fahrenheit << 2) | (bootheat << 1) | autopower);
 		EEPROM.update(EEPROM_VERSION, EE_VERSION);
 		EEPROM.update(EEPROM_INSTALL, EEPROM_CHECK);
 		EEPROM.put(EEPROM_ADCTTG, adc_gain);
-		EEPROM.put(EEPROM_ADCOFF, adc_offset);*/
+		EEPROM.put(EEPROM_ADCOFF, adc_offset);
 
 		tft.println("done.");
 		delay(1000);
@@ -949,7 +956,7 @@ void setup(void) {
 	if (force_menu) optionMenu();
 	else {
 		updateRevision();
-		tft.drawBitmap(0, 20, maiskolben, 160, 64, TFT_YELLOW);
+		//tft.drawBitmap(0, 20, maiskolben, 160, 64, TFT_YELLOW);
 		tft.setCursor(20,86);
 		tft.setTextColor(TFT_YELLOW);
 		tft.setTextSize(2);
@@ -1001,8 +1008,9 @@ void setup(void) {
 	set_t = EEPROM.read(EEPROM_SET_T) << 8;
 	set_t |= EEPROM.read(EEPROM_SET_T+1);
 
-	for (uint8_t i = 0; i < 50; i++)
-		measureVoltage(); //measure average 50 times to get realistic results
+#ifdef USE_LIPO
+	for (uint8_t i = 0; i < 50; i++) measureVoltage(); //measure average 50 times to get realistic results
+#endif
 
 	tft.fillScreen(TFT_BLACK);
 	last_measured = getTemperature();
@@ -1086,7 +1094,7 @@ int main(void) {
 				}
 			}
 			// ca. 60 sec
-			if (oled_buffer_index == 4) {
+			if (oled_buffer_index == OLED_SCREEN_DIVIDER) {
 				// shift buffer for one pixel right
 				for (int i = OLED_SCREEN_WIDTH; i > 0; i--) {
 					oled_buffer[i] = oled_buffer[i - 1];
@@ -1098,9 +1106,8 @@ int main(void) {
 				oled_buffer_index = 0;
 			} else oled_buffer_index++;
 			oled.display();
-#else
-			tft_display();
 #endif
+		tft_display();
 #ifdef USE_SERIAL
 			Serial.print(stored[0]);
 			Serial.print(";");
