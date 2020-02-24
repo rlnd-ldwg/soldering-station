@@ -98,13 +98,16 @@ PID heaterPID(&cur_td, &pid_val, &set_td, kp, ki, kd, DIRECT);
 	Adafruit_NeoPixel neo_ring = Adafruit_NeoPixel(NUM_LED, NEOPIXEL, NEO_GRB + NEO_KHZ800);
 #endif
 
-#ifdef USE_SSD1306
 #define OLED_SCREEN_WIDTH	128
 #define OLED_SCREEN_HEIGHT	32
 #define OLED_RESET 			4
 #define OLED_ADDR 			0x3C
+
+#ifdef USE_SSD1306
 Adafruit_SSD1306 oled(OLED_SCREEN_WIDTH, OLED_SCREEN_HEIGHT, &Wire, OLED_RESET);
 #endif
+uint8_t oled_buffer[OLED_SCREEN_WIDTH + 1];
+uint8_t oled_buffer_index = 0;
 
 int re_state = RE_NONE;
 int re_dt = -1;
@@ -310,6 +313,7 @@ int getTemperature(void) {
 	} else {
 		analogWrite(HEATER_PWM, pwm); //switch heater back to last value
 	}
+	//return round(adc < 210 ? (((float)adc) * 0.540805) : (((float)adc) * 0.4163 + 30));
 	return round(((float) adc) * adc_gain + adc_offset);
 }
 
@@ -803,8 +807,6 @@ void setup(void) {
 	pinMode(SW_T1, INPUT_PULLUP);
 	pinMode(SW_T2, INPUT_PULLUP);
 	pinMode(SW_T3, INPUT_PULLUP);
-	pinMode(SW_UP, INPUT_PULLUP);
-	pinMode(SW_DOWN, INPUT_PULLUP);
 	pinMode(SW_STBY, INPUT_PULLUP);
 	pinMode (RE_CLK,INPUT_PULLUP);
 	pinMode (RE_DT,INPUT_PULLUP);
@@ -890,15 +892,15 @@ void setup(void) {
 		while (digitalRead(SW_STBY)) {
 			int t = getTemperature();
 			uint16_t adc = analogRead(TEMP_SENSE);
-			digitalWrite(HEATER_PWM, !digitalRead(SW_T1) | !digitalRead(SW_T2) | !digitalRead(SW_T3));
-			if (!digitalRead(SW_DOWN)) {
+			digitalWrite(HEATER_PWM, !digitalRead(SW_T3));
+			if (!digitalRead(SW_T1)) { // SW_DOWN
 				if (!adc) {
 					digitalWrite(HEATER_PWM, HIGH);
 				} else {
 					adc1 = adc;
 				}
 			}
-			if (!digitalRead(SW_UP)) {
+			if (!digitalRead(SW_T2)) { // SW_UP
 				if (!adc) {
 					digitalWrite(HEATER_PWM, HIGH);
 				} else {
@@ -919,11 +921,11 @@ void setup(void) {
 			}
 			delay(50);
 		}
-		EEPROM.update(EEPROM_OPTIONS,  (fahrenheit << 2) | (bootheat << 1) | autopower);
+		/*EEPROM.update(EEPROM_OPTIONS,  (fahrenheit << 2) | (bootheat << 1) | autopower);
 		EEPROM.update(EEPROM_VERSION, EE_VERSION);
 		EEPROM.update(EEPROM_INSTALL, EEPROM_CHECK);
 		EEPROM.put(EEPROM_ADCTTG, adc_gain);
-		EEPROM.put(EEPROM_ADCOFF, adc_offset);
+		EEPROM.put(EEPROM_ADCOFF, adc_offset);*/
 
 		tft.println("done.");
 		delay(1000);
@@ -1015,68 +1017,104 @@ void setup(void) {
 }
 
 /* *************** MAIN *************** */
-void loop(void) {
+int main(void) {
+	init();
+	setup();
+	while (true) {
 #ifdef USE_NEOPIXEL
-	if (stby) {
-		for (int i = 0; i < NUM_LED; i++) {
-			neo_ring.setPixelColor(i, neo_ring.Color(0, 0, 200));
-		}
-		neo_ring.setBrightness(neo_lightness);
-		neo_ring.show();
+		if (stby) {
+			for (int i = 0; i < NUM_LED; i++) {
+				neo_ring.setPixelColor(i, neo_ring.Color(0, 0, 200));
+			}
+			neo_ring.setBrightness(neo_lightness);
+			neo_ring.show();
 
-		if (neo_lightness >= STBY_LIGTHNESS_MAX) neo_lightness_direction = false;
-		if (neo_lightness <= STBY_LIGTHNESS_MIN) neo_lightness_direction = true;
-		if (neo_lightness_direction) neo_lightness += STBY_LIGTHNESS_STEP; else neo_lightness -= STBY_LIGTHNESS_STEP;
+			if (neo_lightness >= STBY_LIGTHNESS_MAX) neo_lightness_direction = false;
+			if (neo_lightness <= STBY_LIGTHNESS_MIN) neo_lightness_direction = true;
+			if (neo_lightness_direction) neo_lightness += STBY_LIGTHNESS_STEP; else neo_lightness -= STBY_LIGTHNESS_STEP;
 
-	} else if (off == true) {
-		for (int i = 0; i < NUM_LED; i++) {
-			neo_ring.setPixelColor(i, neo_ring.Color(0, 0, 0));
-		}
-		neo_ring.show();
-	} else {
-		int g = 96;
-		int count = (set_t - TEMP_MIN) * NUM_LED / (TEMP_MAX - TEMP_MIN);
-		int g_step = - 96 / NUM_LED;
-		for (int i = 0; i < NUM_LED; i++) {
-			if (i <= count) {
-				if (pwm > 0) {
-					neo_ring.setPixelColor(i, neo_ring.Color(200, 200, 200));
-				} else {
-					neo_ring.setPixelColor(i, neo_ring.Color(255, 0 /* g */, 0));
-				}
-			} else {
+		} else if (off == true) {
+			for (int i = 0; i < NUM_LED; i++) {
 				neo_ring.setPixelColor(i, neo_ring.Color(0, 0, 0));
 			}
-			neo_ring.setBrightness(NEO_BRIGHTNESS);
 			neo_ring.show();
-			g += g_step;
+		} else {
+			int g = 96;
+			int count = (set_t - TEMP_MIN) * NUM_LED / (TEMP_MAX - TEMP_MIN);
+			int g_step = - 96 / NUM_LED;
+			for (int i = 0; i < NUM_LED; i++) {
+				if (i <= count) {
+					if (pwm > 0) {
+						neo_ring.setPixelColor(i, neo_ring.Color(200, 200, 200));
+					} else {
+						neo_ring.setPixelColor(i, neo_ring.Color(255, 0 /* g */, 0));
+					}
+				} else {
+					neo_ring.setPixelColor(i, neo_ring.Color(0, 0, 0));
+				}
+				neo_ring.setBrightness(NEO_BRIGHTNESS);
+				neo_ring.show();
+				g += g_step;
+			}
 		}
-	}
 #else
-	analogWrite(HEAT_LED, pwm);
+		analogWrite(HEAT_LED, pwm);
 #endif
-	if (sendNext <= millis()) {
-		sendNext += 100;
+		if (sendNext <= millis()) {
+			sendNext += 100;
 #ifdef USE_SSD1306
-		oled.setTextSize(1);
-		oled.setTextColor(WHITE);
-		oled.setCursor(0,0);
-		oled.print("temp: ");
-		oled.println(set_t - cur_t);
-		oled.setCursor(0,10);
-		oled.print("pid : ");
-		oled.println(pid_val);
-		oled.setCursor(0,20);
-		oled.print("pwm : ");
-		oled.println(pwm);
-		oled.display();
-		oled.clearDisplay();
+			// 4 - ca. 60 sec
+			if (oled_buffer_index == 4) {
+				// shift buffer for one pixel right
+				for (int i = OLED_SCREEN_WIDTH; i > 0; i--) {
+					oled_buffer[i] = oled_buffer[i - 1];
+				}
+				int value = (cur_t - TEMP_MIN) / 8;
+				if (value < 0) value = 0;
+				if (value >= OLED_SCREEN_HEIGHT) value = OLED_SCREEN_HEIGHT - 1;
+				oled_buffer[0] = value;
+				oled.clearDisplay();
+				for (int i = 0; i < OLED_SCREEN_WIDTH; i++) {
+					oled.drawPixel(i, OLED_SCREEN_HEIGHT - 1 - oled_buffer[i], SSD1306_WHITE);
+				}
+				oled_buffer_index = 0;
+			} else oled_buffer_index++;
+			oled.display();
 #else
-		tft_display();
+			tft_display();
 #endif
-	}
-	delay(DELAY_MAIN_LOOP);
-	if (power_down) {
-		powerDown();
+#ifdef SERIAL
+			Serial.print(stored[0]);
+			Serial.print(";");
+			Serial.print(stored[1]);
+			Serial.print(";");
+			Serial.print(stored[2]);
+			Serial.print(";");
+			Serial.print(off?0:1);
+			Serial.print(";");
+			Serial.print(error);
+			Serial.print(";");
+			Serial.print(stby?1:0);
+			Serial.print(";");
+			Serial.print(stby_layoff?1:0);
+			Serial.print(";");
+			Serial.print(set_t);
+			Serial.print(";");
+			Serial.print(cur_t);
+			Serial.print(";");
+			Serial.print(pid_val);
+			Serial.print(";");
+			Serial.print(v_c2>1.0?v_c1:0.0);
+			Serial.print(";");
+			Serial.print(v_c2);
+			Serial.print(";");
+			Serial.println(v);
+			Serial.flush();
+#endif
+		}
+		delay(DELAY_MAIN_LOOP);
+		if (power_down) {
+			powerDown();
+		}
 	}
 }
