@@ -9,7 +9,7 @@
 #include <Adafruit_SSD1306.h>
 #include "definitions.h"
 
-//#define USE_SSD1306
+#define USE_SSD1306
 //#define USE_NEOPIXEL
 //#define SERIAL
 
@@ -31,7 +31,6 @@
  * Only used for testing, do not use.
  */
 //#define INSTALL
-//#define TEST_ADC
 
 volatile boolean off = true, stby = true, stby_layoff = false, clear_display = true, store_invalid = true, menu = false;
 volatile uint8_t pwm, threshold_counter;
@@ -100,6 +99,7 @@ PID heaterPID(&cur_td, &pid_val, &set_td, kp, ki, kd, DIRECT);
 
 #define OLED_SCREEN_WIDTH	128
 #define OLED_SCREEN_HEIGHT	32
+#define OLED_SCREEN_OFFSET 	32
 #define OLED_RESET 			4
 #define OLED_ADDR 			0x3C
 
@@ -275,6 +275,11 @@ void measureVoltage(void) {
 	analogRead(BAT_C3);
 	v_c3 = v_c3*.9+(analogRead(BAT_C3)*(5.0*3.0)/1024.0)*.1; //maximum measurable is ~15V
 	v = v_c3;
+#ifdef VIN
+	analogRead(VIN);
+	v_in = v_in*.9+(analogRead(VIN)*25/1024.0)*.1; //maximum measurable is ~24.5V
+	v = v_in; //backwards compatibility
+#endif
 }
 
 uint16_t median(uint8_t analogIn) {
@@ -827,6 +832,7 @@ void setup(void) {
 	oled.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR);
 	oled.display();
 	oled.clearDisplay();
+	for (int i = 0; i < OLED_SCREEN_WIDTH; i++) {oled_buffer[i] = -1;}
 #endif
 
 #ifdef HARDWARE_DEFINED_TFT
@@ -1063,7 +1069,23 @@ int main(void) {
 		if (sendNext <= millis()) {
 			sendNext += 100;
 #ifdef USE_SSD1306
-			// 4 - ca. 60 sec
+			oled.clearDisplay();
+			oled.setTextSize(1);
+			oled.setTextColor(WHITE);
+			oled.setCursor(0,0);
+			oled.println(set_t - cur_t); // temperature
+			oled.setCursor(0,10);
+			oled.println(pid_val); // pid
+			oled.setCursor(0,20);
+			oled.println(pwm); // pwm
+			// graph
+			for (int i = 0; i < OLED_SCREEN_WIDTH - OLED_SCREEN_OFFSET; i++) {
+				uint8_t pixelColor = SSD1306_WHITE;
+				if (oled_buffer[i] > 0) {
+					oled.drawPixel(i + OLED_SCREEN_OFFSET, OLED_SCREEN_HEIGHT - 1 - oled_buffer[i], SSD1306_WHITE);
+				}
+			}
+			// ca. 60 sec
 			if (oled_buffer_index == 4) {
 				// shift buffer for one pixel right
 				for (int i = OLED_SCREEN_WIDTH; i > 0; i--) {
@@ -1073,10 +1095,6 @@ int main(void) {
 				if (value < 0) value = 0;
 				if (value >= OLED_SCREEN_HEIGHT) value = OLED_SCREEN_HEIGHT - 1;
 				oled_buffer[0] = value;
-				oled.clearDisplay();
-				for (int i = 0; i < OLED_SCREEN_WIDTH; i++) {
-					oled.drawPixel(i, OLED_SCREEN_HEIGHT - 1 - oled_buffer[i], SSD1306_WHITE);
-				}
 				oled_buffer_index = 0;
 			} else oled_buffer_index++;
 			oled.display();
