@@ -9,8 +9,8 @@
 #include <Adafruit_SSD1306.h>
 #include "definitions.h"
 
-#define USE_SSD1306
-#define USE_NEOPIXEL
+//#define USE_SSD1306
+//#define USE_NEOPIXEL
 //#define USE_SERIAL
 //#define USE_LIPO
 
@@ -803,7 +803,7 @@ void tft_display(void) {
 }
 
 void setup(void) {
-	//analogReference(EXTERNAL);
+	analogReference(DEFAULT /*EXTERNAL*/);
 	digitalWrite(HEATER_PWM, LOW);
 	pinMode(HEATER_PWM, OUTPUT);
 	pinMode(POWER, INPUT_PULLUP);
@@ -875,7 +875,9 @@ void setup(void) {
 		}
 		tft.fillScreen(TFT_BLACK);
 		tft.setTextColor(TFT_YELLOW);
-		//tft.drawBitmap(0, 20, maiskolben, 160, 64, YELLOW);
+#ifndef USE_SSD1306
+		tft.drawBitmap(0, 20, maiskolben, 160, 64, YELLOW);
+#endif
 		tft.setCursor(20,86);
 		tft.setTextColor(TFT_YELLOW);
 		tft.setTextSize(2);
@@ -956,7 +958,9 @@ void setup(void) {
 	if (force_menu) optionMenu();
 	else {
 		updateRevision();
-		//tft.drawBitmap(0, 20, maiskolben, 160, 64, TFT_YELLOW);
+#ifndef USE_SSD1306
+		tft.drawBitmap(0, 20, maiskolben, 160, 64, TFT_YELLOW);
+#endif
 		tft.setCursor(20,86);
 		tft.setTextColor(TFT_YELLOW);
 		tft.setTextSize(2);
