@@ -1315,4 +1315,20 @@ Wire Wire Line
 Connection ~ 10100 4900
 Wire Wire Line
 	10100 4900 10250 4900
+Wire Wire Line
+	5900 3950 5900 4250
+Wire Wire Line
+	5900 4250 6500 4250
+Connection ~ 6500 4250
+$Comp
+L power:+5C #PWR?
+U 1 1 5E5813D4
+P 5900 950
+F 0 "#PWR?" H 5900 800 50  0001 C CNN
+F 1 "+5C" H 5915 1123 50  0000 C CNN
+F 2 "" H 5900 950 50  0001 C CNN
+F 3 "" H 5900 950 50  0001 C CNN
+	1    5900 950 
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

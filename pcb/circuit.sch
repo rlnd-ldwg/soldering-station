@@ -37,39 +37,6 @@ F 3 "~" H 7850 6010 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L Switch:SW_Push SW4
-U 1 1 5E4FBC7D
-P 900 6950
-F 0 "SW4" H 900 7235 50  0000 C CNN
-F 1 "T+" H 900 7144 50  0000 C CNN
-F 2 "Button_Switch_THT:SW_Tactile_Straight_KSL0Axx1LFTR" H 900 7150 50  0001 C CNN
-F 3 "~" H 900 7150 50  0001 C CNN
-	1    900  6950
-	1    0    0    -1  
-$EndComp
-$Comp
-L Switch:SW_Push SW5
-U 1 1 5E4FD724
-P 900 7300
-F 0 "SW5" H 900 7585 50  0000 C CNN
-F 1 "T-" H 900 7494 50  0000 C CNN
-F 2 "Button_Switch_THT:SW_Tactile_Straight_KSL0Axx1LFTR" H 900 7500 50  0001 C CNN
-F 3 "~" H 900 7500 50  0001 C CNN
-	1    900  7300
-	1    0    0    -1  
-$EndComp
-$Comp
-L Switch:SW_Push SW6
-U 1 1 5E4FEE8B
-P 900 7700
-F 0 "SW6" H 900 7985 50  0000 C CNN
-F 1 "Pow" H 900 7894 50  0000 C CNN
-F 2 "Button_Switch_THT:SW_Tactile_Straight_KSL0Axx1LFTR" H 900 7900 50  0001 C CNN
-F 3 "~" H 900 7900 50  0001 C CNN
-	1    900  7700
-	1    0    0    -1  
-$EndComp
-$Comp
 L Transistor_FET:2N7000 Q2
 U 1 1 5E4FFEE1
 P 10200 1950
@@ -123,17 +90,6 @@ F 2 "Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm" H 7638 1550 50  0001 C CNN
 F 3 "~" H 7600 1700 50  0001 C CNN
 	1    7600 1700
 	-1   0    0    1   
-$EndComp
-$Comp
-L Device:R R9
-U 1 1 5E50773B
-P 2250 7150
-F 0 "R9" H 2320 7196 50  0000 L CNN
-F 1 "R" H 2320 7105 50  0000 L CNN
-F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" V 2180 7150 50  0001 C CNN
-F 3 "~" H 2250 7150 50  0001 C CNN
-	1    2250 7150
-	1    0    0    -1  
 $EndComp
 $Comp
 L Device:R R10
@@ -493,17 +449,6 @@ Wire Wire Line
 	9750 2400 9750 2450
 Wire Wire Line
 	9750 2450 9600 2450
-$Comp
-L Connector:Screw_Terminal_01x02 J7
-U 1 1 5E6EF2BD
-P 1700 7550
-F 0 "J7" H 1780 7542 50  0000 L CNN
-F 1 "Screw_Terminal_01x02" H 1780 7451 50  0000 L CNN
-F 2 "Connector_PinSocket_1.27mm:PinSocket_1x02_P1.27mm_Vertical" H 1700 7550 50  0001 C CNN
-F 3 "~" H 1700 7550 50  0001 C CNN
-	1    1700 7550
-	1    0    0    -1  
-$EndComp
 Text GLabel 6500 2450 2    50   Input ~ 0
 LiPo1
 Text GLabel 6500 2350 2    50   Input ~ 0
@@ -844,8 +789,6 @@ F 3 "~" H 950 2200 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 Wire Wire Line
-	1400 1000 1650 1000
-Wire Wire Line
 	1650 1000 1650 1200
 Wire Wire Line
 	2000 1000 2000 1200
@@ -969,9 +912,6 @@ F 3 "~" H 1850 1200 50  0001 C CNN
 	1    1850 1200
 	0    1    -1   0   
 $EndComp
-Connection ~ 1650 1000
-Wire Wire Line
-	1650 1000 2000 1000
 Connection ~ 7600 1550
 Wire Wire Line
 	7600 1550 7650 1550
@@ -1027,17 +967,6 @@ F 1 "GNDD" H 1554 3495 50  0000 C CNN
 F 2 "" H 1550 3650 50  0001 C CNN
 F 3 "" H 1550 3650 50  0001 C CNN
 	1    1550 3650
-	1    0    0    -1  
-$EndComp
-$Comp
-L 4xxx:4050 U2
-U 6 1 5E58DBB8
-P 1650 7200
-F 0 "U2" H 1650 7517 50  0000 C CNN
-F 1 "4050" H 1650 7426 50  0000 C CNN
-F 2 "Package_DIP:DIP-16_W7.62mm" H 1650 7200 50  0001 C CNN
-F 3 "http://www.intersil.com/content/dam/intersil/documents/cd40/cd4050bms.pdf" H 1650 7200 50  0001 C CNN
-	6    1650 7200
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -1235,17 +1164,6 @@ Wire Wire Line
 Wire Wire Line
 	8100 2850 8100 2900
 $Comp
-L power:GNDD #PWR0120
-U 1 1 5E6CE72E
-P 8100 2900
-F 0 "#PWR0120" H 8100 2650 50  0001 C CNN
-F 1 "GNDD" H 8104 2745 50  0000 C CNN
-F 2 "" H 8100 2900 50  0001 C CNN
-F 3 "" H 8100 2900 50  0001 C CNN
-	1    8100 2900
-	1    0    0    -1  
-$EndComp
-$Comp
 L Logic_LevelTranslator:TXS0102DCT U4
 U 1 1 5E6CF7FC
 P 1700 4600
@@ -1315,4 +1233,34 @@ Wire Wire Line
 Connection ~ 10100 4900
 Wire Wire Line
 	10100 4900 10250 4900
+Wire Wire Line
+	5900 3950 5900 4250
+Wire Wire Line
+	5900 4250 6500 4250
+Connection ~ 6500 4250
+Wire Wire Line
+	1400 1000 2000 1000
+Connection ~ 1650 1200
+$Comp
+L power:GNDD #PWR0120
+U 1 1 5E6CE72E
+P 8100 2900
+F 0 "#PWR0120" H 8100 2650 50  0001 C CNN
+F 1 "GNDD" H 8104 2745 50  0000 C CNN
+F 2 "" H 8100 2900 50  0001 C CNN
+F 3 "" H 8100 2900 50  0001 C CNN
+	1    8100 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 5E5CCF95
+P 5900 950
+F 0 "#PWR?" H 5900 800 50  0001 C CNN
+F 1 "+5V" H 5915 1123 50  0000 C CNN
+F 2 "" H 5900 950 50  0001 C CNN
+F 3 "" H 5900 950 50  0001 C CNN
+	1    5900 950 
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
