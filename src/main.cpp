@@ -13,6 +13,7 @@
 //#define USE_NEOPIXEL
 //#define USE_SERIAL
 //#define USE_LIPO
+//#define USE_EXTERNAL_AREF
 
 /*
  * If your display stays white, uncomment this.
@@ -366,9 +367,9 @@ void rotary_encoder() {
 				// temp +
 				re_state = RE_LEFT3;
 				setStandby(false);
-				if(set_t > TEMP_MAX) set_t = TEMP_MAX;
 				if (now - re_millis < 100) set_t += 10;
-				else set_t++;
+				else set_t += 5;
+				if(set_t > TEMP_MAX) set_t = TEMP_MAX;
 				re_millis = now;
 				updateEEPROM();
 			 }
@@ -385,7 +386,7 @@ void rotary_encoder() {
 			 	re_state = RE_RIGHT3;
 			 	setStandby(false);
 				if (now - re_millis < 100) set_t -= 10;
-				else set_t--;
+				else set_t -= 5;
 				if (set_t < TEMP_MIN) set_t = TEMP_MIN;
 				re_millis = now;
 			 	updateEEPROM();
@@ -468,6 +469,7 @@ void timer_sw_poll(void) {
 		}
 		cnt_off_press = 0;
 	}
+#ifndef USE_SERIAL
 	boolean t1 = !digitalRead(SW_T1);
 	boolean t2 = !digitalRead(SW_T2);
 	boolean t3 = !digitalRead(SW_T3);
@@ -511,6 +513,7 @@ void timer_sw_poll(void) {
 			cnt_but_store++;
 		}
 	}
+#endif
 }
 
 void timer_isr(void) {
@@ -803,7 +806,9 @@ void tft_display(void) {
 }
 
 void setup(void) {
-	analogReference(DEFAULT /*EXTERNAL*/);
+#ifdef USE_EXTERNAL_AREF
+	analogReference(EXTERNAL);
+#endif
 	digitalWrite(HEATER_PWM, LOW);
 	pinMode(HEATER_PWM, OUTPUT);
 	pinMode(POWER, INPUT_PULLUP);
@@ -990,6 +995,15 @@ void setup(void) {
 	 * lower frequency = noisier tip
 	 * higher frequency = needs higher pwm
 	 */
+
+	 // For Arduino using ATmega8, 168 or 328* (m8, m168, m328, m238p)
+	 // Phase-corrected PWM by default
+	 // B00000xxx - 3 last bits (least significant bit or LSB) decide the divisor of the timer
+	 // Frequency = 16Mhz / (256 * divisor)
+	 // Example: divisor = 1, frequency = 16Mhz / (256) = 62.5Khz,
+	 //----- PWM frequency for D3 & D11 -----
+
+
 	//PWM Prescaler = 1024 31Hz
 	//TCCR2B = (TCCR2B & 0b11111000) | 7;
 	//PWM Prescaler = 256 122Hz
@@ -1011,6 +1025,7 @@ void setup(void) {
 	}
 	set_t = EEPROM.read(EEPROM_SET_T) << 8;
 	set_t |= EEPROM.read(EEPROM_SET_T+1);
+	set_t -= set_t % 5;
 
 #ifdef USE_LIPO
 	for (uint8_t i = 0; i < 50; i++) measureVoltage(); //measure average 50 times to get realistic results
@@ -1018,7 +1033,7 @@ void setup(void) {
 
 	tft.fillScreen(TFT_BLACK);
 	last_measured = getTemperature();
-	Timer1.initialize(1000);
+	Timer1.initialize(1000); // 1 mSec -1 kHz
 	Timer1.attachInterrupt(timer_isr);
 	heaterPID.SetMode(AUTOMATIC);
 	sendNext = millis();
@@ -1057,23 +1072,30 @@ int main(void) {
 			}
 			neo_ring.show();
 		} else {
-			int g = 96;
-			int count = (set_t - TEMP_MIN) * NUM_LED / (TEMP_MAX - TEMP_MIN);
-			int g_step = - 96 / NUM_LED;
-			for (int i = 0; i < NUM_LED; i++) {
-				if (i <= count) {
-					if (pwm > 0) {
-						neo_ring.setPixelColor(i, neo_ring.Color(200, 200, 200));
+			// if (pwm > 0) {
+			// 	int count = pwm / 255 * NUM_LED;
+			// 	for (int i = 0; i < NUM_LED; i++) {
+			// 		if (i <= count) {
+			// 			neo_ring.setPixelColor(i, neo_ring.Color(200, 200, 200));
+			// 		} else {
+			// 			neo_ring.setPixelColor(i, neo_ring.Color(0, 0, 0));
+			// 		}
+			// 	}
+			// } else {
+				int g = 96;
+				int count = (set_t - TEMP_MIN) * NUM_LED / (TEMP_MAX - TEMP_MIN);
+				int g_step = - 96 / NUM_LED;
+				for (int i = 0; i < NUM_LED; i++) {
+					if (i <= count) {
+						neo_ring.setPixelColor(i, neo_ring.Color(255, g, 0));
 					} else {
-						neo_ring.setPixelColor(i, neo_ring.Color(255, 0 /* g */, 0));
+						neo_ring.setPixelColor(i, neo_ring.Color(0, 0, 0));
 					}
-				} else {
-					neo_ring.setPixelColor(i, neo_ring.Color(0, 0, 0));
+					g += g_step;
 				}
-				neo_ring.setBrightness(NEO_BRIGHTNESS);
-				neo_ring.show();
-				g += g_step;
-			}
+			// }
+			neo_ring.setBrightness(NEO_BRIGHTNESS);
+			neo_ring.show();
 		}
 #else
 		analogWrite(HEAT_LED, pwm);
@@ -1113,32 +1135,39 @@ int main(void) {
 #endif
 		tft_display();
 #ifdef USE_SERIAL
-			Serial.print(stored[0]);
-			Serial.print(";");
-			Serial.print(stored[1]);
-			Serial.print(";");
-			Serial.print(stored[2]);
-			Serial.print(";");
-			Serial.print(off?0:1);
-			Serial.print(";");
-			Serial.print(error);
-			Serial.print(";");
-			Serial.print(stby?1:0);
-			Serial.print(";");
-			Serial.print(stby_layoff?1:0);
-			Serial.print(";");
-			Serial.print(set_t);
-			Serial.print(";");
-			Serial.print(cur_t);
-			Serial.print(";");
-			Serial.print(pid_val);
-			Serial.print(";");
-			Serial.print(v_c2>1.0?v_c1:0.0);
-			Serial.print(";");
-			Serial.print(v_c2);
-			Serial.print(";");
-			Serial.println(v);
-			Serial.flush();
+		Serial.print(0);
+		Serial.print(" ");
+		Serial.print(255);
+		Serial.print(" ");
+		Serial.println(pwm);
+
+		// original code
+		// Serial.print(stored[0]);
+		// Serial.print(";");
+		// Serial.print(stored[1]);
+		// Serial.print(";");
+		// Serial.print(stored[2]);
+		// Serial.print(";");
+		// Serial.print(off?0:1);
+		// Serial.print(";");
+		// Serial.print(error);
+		// Serial.print(";");
+		// Serial.print(stby?1:0);
+		// Serial.print(";");
+		// Serial.print(stby_layoff?1:0);
+		// Serial.print(";");
+		// Serial.print(set_t);
+		// Serial.print(";");
+		// Serial.print(cur_t);
+		// Serial.print(";");
+		// Serial.print(pid_val);
+		// Serial.print(";");
+		// Serial.print(v_c2>1.0?v_c1:0.0);
+		// Serial.print(";");
+		// Serial.print(v_c2);
+		// Serial.print(";");
+		// Serial.println(v);
+		// Serial.flush();
 #endif
 		}
 		delay(DELAY_MAIN_LOOP);
