@@ -20,7 +20,7 @@ U 7 1 5E4F7EA0
 P 10450 5450
 F 0 "U2" H 10680 5496 50  0000 L CNN
 F 1 "4050" H 10680 5405 50  0000 L CNN
-F 2 "Package_DIP:DIP-16_W7.62mm" H 10450 5450 50  0001 C CNN
+F 2 "" H 10450 5450 50  0001 C CNN
 F 3 "http://www.intersil.com/content/dam/intersil/documents/cd40/cd4050bms.pdf" H 10450 5450 50  0001 C CNN
 	7    10450 5450
 	0    1    -1   0   
@@ -273,7 +273,7 @@ U 5 1 5E4DB4A0
 P 9100 5450
 F 0 "U2" H 9100 5767 50  0000 C CNN
 F 1 "4050" H 9100 5676 50  0000 C CNN
-F 2 "Package_DIP:DIP-16_W7.62mm" H 9100 5450 50  0001 C CNN
+F 2 "" H 9100 5450 50  0001 C CNN
 F 3 "http://www.intersil.com/content/dam/intersil/documents/cd40/cd4050bms.pdf" H 9100 5450 50  0001 C CNN
 	5    9100 5450
 	1    0    0    -1  
@@ -284,7 +284,7 @@ U 4 1 5E4DA910
 P 9100 5100
 F 0 "U2" H 9100 5417 50  0000 C CNN
 F 1 "4050" H 9100 5326 50  0000 C CNN
-F 2 "Package_DIP:DIP-16_W7.62mm" H 9100 5100 50  0001 C CNN
+F 2 "" H 9100 5100 50  0001 C CNN
 F 3 "http://www.intersil.com/content/dam/intersil/documents/cd40/cd4050bms.pdf" H 9100 5100 50  0001 C CNN
 	4    9100 5100
 	1    0    0    -1  
@@ -295,7 +295,7 @@ U 3 1 5E4D9A59
 P 9100 4750
 F 0 "U2" H 9100 5067 50  0000 C CNN
 F 1 "4050" H 9100 4976 50  0000 C CNN
-F 2 "Package_DIP:DIP-16_W7.62mm" H 9100 4750 50  0001 C CNN
+F 2 "" H 9100 4750 50  0001 C CNN
 F 3 "http://www.intersil.com/content/dam/intersil/documents/cd40/cd4050bms.pdf" H 9100 4750 50  0001 C CNN
 	3    9100 4750
 	1    0    0    -1  
@@ -306,7 +306,7 @@ U 2 1 5E4D891D
 P 9100 4400
 F 0 "U2" H 9100 4717 50  0000 C CNN
 F 1 "4050" H 9100 4626 50  0000 C CNN
-F 2 "Package_DIP:DIP-16_W7.62mm" H 9100 4400 50  0001 C CNN
+F 2 "" H 9100 4400 50  0001 C CNN
 F 3 "http://www.intersil.com/content/dam/intersil/documents/cd40/cd4050bms.pdf" H 9100 4400 50  0001 C CNN
 	2    9100 4400
 	1    0    0    -1  
@@ -430,8 +430,6 @@ Wire Wire Line
 	9750 1950 10000 1950
 Wire Wire Line
 	9750 1950 9750 2100
-Text GLabel 9600 2450 0    50   Input ~ 0
-Tip
 Text GLabel 6500 3250 2    50   Input ~ 0
 Tip
 $Comp
@@ -466,17 +464,6 @@ F 3 "" H 9950 5600 50  0001 C CNN
 	1    9950 5600
 	1    0    0    -1  
 $EndComp
-$Comp
-L power:+3.3V #PWR0110
-U 1 1 5E8C1B71
-P 9200 3000
-F 0 "#PWR0110" H 9200 2850 50  0001 C CNN
-F 1 "+3.3V" H 9200 3150 50  0000 C CNN
-F 2 "" H 9200 3000 50  0001 C CNN
-F 3 "" H 9200 3000 50  0001 C CNN
-	1    9200 3000
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	10950 5450 10950 3900
 Wire Wire Line
@@ -494,7 +481,7 @@ U 1 1 5E4D7F80
 P 9100 4050
 F 0 "U2" H 9100 4367 50  0000 C CNN
 F 1 "4050" H 9100 4276 50  0000 C CNN
-F 2 "Package_DIP:DIP-16_W7.62mm" H 9100 4050 50  0001 C CNN
+F 2 "" H 9100 4050 50  0001 C CNN
 F 3 "http://www.intersil.com/content/dam/intersil/documents/cd40/cd4050bms.pdf" H 9100 4050 50  0001 C CNN
 	1    9100 4050
 	1    0    0    -1  
@@ -1087,7 +1074,6 @@ Wire Wire Line
 	10200 4200 10200 3700
 Wire Wire Line
 	10250 3700 10200 3700
-Connection ~ 10200 3700
 Wire Wire Line
 	10250 3600 9950 3600
 Wire Wire Line
@@ -1096,73 +1082,10 @@ Wire Wire Line
 	9950 3900 9950 3600
 Connection ~ 9950 3900
 Connection ~ 9950 3600
-$Comp
-L Transistor_BJT:BC328 Q5
-U 1 1 5E5AEB57
-P 9100 3250
-F 0 "Q5" H 9291 3296 50  0000 L CNN
-F 1 "BC328" H 9291 3205 50  0000 L CNN
-F 2 "Package_TO_SOT_THT:TO-92_Inline" H 9300 3175 50  0001 L CIN
-F 3 "http://www.redrok.com/PNP_BC327_-45V_-800mA_0.625W_Hfe100_TO-92.pdf" H 9100 3250 50  0001 L CNN
-	1    9100 3250
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	9950 3050 9200 3050
-Wire Wire Line
-	9200 3000 9200 3050
-Connection ~ 9200 3050
-Wire Wire Line
-	9200 3700 9200 3450
-Wire Wire Line
-	9200 3700 10200 3700
-$Comp
-L Device:R R11
-U 1 1 5E5DD438
-P 8750 3250
-F 0 "R11" V 8543 3250 50  0000 C CNN
-F 1 "R" V 8634 3250 50  0000 C CNN
-F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" V 8680 3250 50  0001 C CNN
-F 3 "~" H 8750 3250 50  0001 C CNN
-	1    8750 3250
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:R_POT_TRIM TR1
-U 1 1 5E5DED2E
-P 8450 2850
-F 0 "TR1" V 8243 2850 50  0000 C CNN
-F 1 "Backlight" V 8334 2850 50  0000 C CNN
-F 2 "Potentiometer_THT:Potentiometer_Piher_PT-10-V10_Vertical" H 8450 2850 50  0001 C CNN
-F 3 "~" H 8450 2850 50  0001 C CNN
-	1    8450 2850
-	0    1    1    0   
-$EndComp
-$Comp
-L Jumper:Jumper_3_Open JP2
-U 1 1 5E5E0E31
-P 8450 3250
-F 0 "JP2" V 8496 3337 50  0000 L CNN
-F 1 "Backlight" V 8405 3337 50  0000 L CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 8450 3250 50  0001 C CNN
-F 3 "~" H 8450 3250 50  0001 C CNN
-	1    8450 3250
-	0    -1   -1   0   
-$EndComp
-Text GLabel 8450 3500 3    50   Input ~ 0
+Text GLabel 8800 3700 0    50   Input ~ 0
 BL
 Text GLabel 6500 3550 2    50   Input ~ 0
 BL
-Wire Wire Line
-	8600 2850 8950 2850
-Wire Wire Line
-	8950 2850 8950 3050
-Wire Wire Line
-	8950 3050 9200 3050
-Wire Wire Line
-	8300 2850 8100 2850
-Wire Wire Line
-	8100 2850 8100 2900
 $Comp
 L Logic_LevelTranslator:TXS0102DCT U4
 U 1 1 5E6CF7FC
@@ -1240,18 +1163,6 @@ Wire Wire Line
 Connection ~ 6500 4250
 Wire Wire Line
 	1400 1000 2000 1000
-Connection ~ 1650 1200
-$Comp
-L power:GNDD #PWR0120
-U 1 1 5E6CE72E
-P 8100 2900
-F 0 "#PWR0120" H 8100 2650 50  0001 C CNN
-F 1 "GNDD" H 8104 2745 50  0000 C CNN
-F 2 "" H 8100 2900 50  0001 C CNN
-F 3 "" H 8100 2900 50  0001 C CNN
-	1    8100 2900
-	1    0    0    -1  
-$EndComp
 $Comp
 L power:+5V #PWR?
 U 1 1 5E5CCF95
@@ -1263,4 +1174,20 @@ F 3 "" H 5900 950 50  0001 C CNN
 	1    5900 950 
 	1    0    0    -1  
 $EndComp
+$Comp
+L 4xxx:4050 U2
+U 6 1 5E57BA7A
+P 9100 3700
+F 0 "U2" H 9100 4017 50  0000 C CNN
+F 1 "4050" H 9100 3926 50  0000 C CNN
+F 2 "" H 9100 3700 50  0001 C CNN
+F 3 "http://www.intersil.com/content/dam/intersil/documents/cd40/cd4050bms.pdf" H 9100 3700 50  0001 C CNN
+	6    9100 3700
+	1    0    0    -1  
+$EndComp
+Text GLabel 9600 2450 0    50   Input ~ 0
+Tip
+Wire Wire Line
+	9400 3700 10200 3700
+Connection ~ 10200 3700
 $EndSCHEMATC

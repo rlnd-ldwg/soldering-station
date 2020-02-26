@@ -30,7 +30,7 @@
 
 #define SW_T3       0
 #define SW_T2       1
-#define SW_T1       6
+#define SW_T1       12
 #define HEATER_PWM  3
 #define SW_UP       4
 #define RE_DT 		4

@@ -7,7 +7,8 @@
 //#define __144_RED_PCB__//128x128
 //#define __144_BLACK_PCB__//128x128
 //#define __22_RED_PCB__//240x320
-#define __KMR_1_8__//128x160
+//#define __KMR_1_8__//128x160
+#define __NOMEN_TEC__ //128x160
 //---------------------------------------
 
 
@@ -56,11 +57,6 @@ Not tested!
 	#define __GAMMASET1		//uncomment for another gamma
 	#define __OFFSET		0
 	#elif defined (__KMR_1_8__)
-	/*
-	Like this one:
-	http://www.ebay.it/itm/2-2-Serial-SPI-TFT-LCD-Display-Module-240x320-Chip-ILI9340C-PCB-Adapter-SD-Card-/281304733556
-	Not tested!
-	*/
 		#define _TFTWIDTH  		160//the REAL W resolution of the TFT
 		#define _TFTHEIGHT 		128//the REAL H resolution of the TFT
 		#define _GRAMWIDTH      160
@@ -69,8 +65,23 @@ Not tested!
 		#define __COLORSPC		0// 1:GBR - 0:RGB
 		#define __GAMMASET1		//uncomment for another gamma
 		#define __OFFSET		0
+
+#elif defined (__NOMEN_TEC__)
+/*
+Like this one:
+https://www.ebay.com/c/1873481226
+Not tested!
+*/
+    #define _TFTWIDTH  		160//the REAL W resolution of the TFT
+    #define _TFTHEIGHT 		128//the REAL H resolution of the TFT
+    #define _GRAMWIDTH      162
+    #define _GRAMHEIGH      130
+    #define _GRAMSIZE		_GRAMWIDTH * _GRAMHEIGH
+    #define __COLORSPC		0// 1:GBR - 0:RGB
+    #define __GAMMASET1		//uncomment for another gamma
+    #define __OFFSET	68
 #else
-	#define _TFTWIDTH  		128//128
+    #define _TFTWIDTH  		128//128
 	#define _TFTHEIGHT 		160//160
 	#define _GRAMWIDTH      128
 	#define _GRAMHEIGH      160
