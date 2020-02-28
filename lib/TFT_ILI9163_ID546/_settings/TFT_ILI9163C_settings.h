@@ -79,7 +79,7 @@ Not tested!
     #define _GRAMSIZE		_GRAMWIDTH * _GRAMHEIGH
     #define __COLORSPC		0// 1:GBR - 0:RGB
     #define __GAMMASET1		//uncomment for another gamma
-    #define __OFFSET	68
+    #define __OFFSET	0xff
 #else
     #define _TFTWIDTH  		128//128
 	#define _TFTHEIGHT 		160//160
