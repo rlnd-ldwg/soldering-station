@@ -1,5 +1,4 @@
 EESchema Schematic File Version 4
-LIBS:circuit-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
@@ -439,7 +438,7 @@ F 3 "http://www.intersil.com/content/dam/intersil/documents/cd40/cd4050bms.pdf" 
 	1    9000 4450
 	1    0    0    -1  
 $EndComp
-Text GLabel 8350 5400 0    50   Input ~ 0
+Text GLabel 8350 4900 0    50   Input ~ 0
 Res
 Text GLabel 5400 2700 2    50   Input ~ 0
 Res
@@ -718,14 +717,11 @@ U 1 1 5E6EDFD1
 P 950 2200
 F 0 "J6" H 842 2485 50  0000 C CNN
 F 1 "LiPo-Bal" H 842 2394 50  0000 C CNN
-F 2 "Connector_JST:JST_EH_B4B-EH-A_1x04_P2.50mm_Vertical" H 950 2200 50  0001 C CNN
+F 2 "Connector_JST:JST_EH_S4B-EH_1x04_P2.50mm_Horizontal" H 950 2200 50  0001 C CNN
 F 3 "~" H 950 2200 50  0001 C CNN
 	1    950  2200
 	-1   0    0    -1  
 $EndComp
-Wire Wire Line
-	2100 1000 2100 1200
-Connection ~ 2100 1200
 Wire Wire Line
 	1150 1600 1250 1600
 Connection ~ 2100 1000
@@ -796,17 +792,6 @@ F 3 "~" H 950 1500 50  0001 C CNN
 	1    950  1500
 	-1   0    0    -1  
 $EndComp
-$Comp
-L Device:R R20
-U 1 1 5E509E69
-P 1950 1200
-F 0 "R20" H 2020 1246 50  0000 L CNN
-F 1 "560Ω" H 2020 1155 50  0000 L CNN
-F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" V 1880 1200 50  0001 C CNN
-F 3 "~" H 1950 1200 50  0001 C CNN
-	1    1950 1200
-	0    1    -1   0   
-$EndComp
 Connection ~ 7400 1750
 Wire Wire Line
 	7400 1750 7450 1750
@@ -866,7 +851,7 @@ F 3 "" H 1600 3850 50  0001 C CNN
 $EndComp
 Text GLabel 5400 1200 2    50   Input ~ 0
 TFT-RST
-Text GLabel 8350 4900 0    50   Input ~ 0
+Text GLabel 8350 5400 0    50   Input ~ 0
 TFT-RST
 Wire Wire Line
 	2350 6800 2600 6800
@@ -919,9 +904,9 @@ F 3 "" H 1100 4650 50  0001 C CNN
 	1    1100 4650
 	1    0    0    -1  
 $EndComp
-Text GLabel 2150 4700 2    50   Input ~ 0
+Text GLabel 2250 4700 2    50   Input ~ 0
 SDA
-Text GLabel 2150 4900 2    50   Input ~ 0
+Text GLabel 2250 4900 2    50   Input ~ 0
 SCL
 $Comp
 L MCU_Microchip_ATmega:ATmega328-PU U1
@@ -981,12 +966,12 @@ $EndComp
 $Comp
 L power:GNDD #PWR0121
 U 1 1 5E7470E9
-P 1750 5300
-F 0 "#PWR0121" H 1750 5050 50  0001 C CNN
-F 1 "GNDD" H 1754 5145 50  0000 C CNN
-F 2 "" H 1750 5300 50  0001 C CNN
-F 3 "" H 1750 5300 50  0001 C CNN
-	1    1750 5300
+P 1750 5400
+F 0 "#PWR0121" H 1750 5150 50  0001 C CNN
+F 1 "GNDD" H 1754 5245 50  0000 C CNN
+F 2 "" H 1750 5400 50  0001 C CNN
+F 3 "" H 1750 5400 50  0001 C CNN
+	1    1750 5400
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -1018,18 +1003,6 @@ Wire Wire Line
 Wire Wire Line
 	1300 4300 1650 4300
 Connection ~ 1650 4300
-Wire Wire Line
-	1350 4900 1200 4900
-Wire Wire Line
-	1200 4900 1200 4850
-Wire Wire Line
-	1200 4850 1100 4850
-Wire Wire Line
-	1100 4750 1200 4750
-Wire Wire Line
-	1200 4750 1200 4700
-Wire Wire Line
-	1200 4700 1350 4700
 Wire Wire Line
 	10150 4200 10000 4200
 Wire Wire Line
@@ -1117,17 +1090,6 @@ Wire Wire Line
 	8700 4100 8550 4100
 Wire Wire Line
 	8500 5150 8700 5150
-$Comp
-L power:+5V #PWR0104
-U 1 1 5E6E9FF3
-P 9850 3450
-F 0 "#PWR0104" H 9850 3300 50  0001 C CNN
-F 1 "+5V" H 9865 3623 50  0000 C CNN
-F 2 "" H 9850 3450 50  0001 C CNN
-F 3 "" H 9850 3450 50  0001 C CNN
-	1    9850 3450
-	1    0    0    -1  
-$EndComp
 Text GLabel 5400 3300 2    50   Input ~ 0
 Up
 Wire Notes Line
@@ -1350,10 +1312,6 @@ Wire Wire Line
 Wire Wire Line
 	1400 1200 1400 1300
 Connection ~ 1400 1200
-Wire Wire Line
-	2100 1200 2100 1500
-Wire Wire Line
-	1150 1500 2100 1500
 Connection ~ 2100 1500
 Wire Wire Line
 	2100 1500 2100 1600
@@ -1366,8 +1324,6 @@ Wire Wire Line
 Connection ~ 1750 1200
 Wire Wire Line
 	1750 1200 1800 1200
-Wire Wire Line
-	2400 1300 1400 1300
 Connection ~ 2400 1300
 Connection ~ 1400 1300
 Wire Wire Line
@@ -1393,4 +1349,92 @@ Wire Wire Line
 	2700 1000 2800 1000
 Wire Wire Line
 	2800 1600 2700 1600
+Wire Wire Line
+	2100 1000 2100 1500
+Wire Wire Line
+	2400 1300 1400 1300
+$Comp
+L Device:R R20
+U 1 1 5E509E69
+P 1800 1350
+F 0 "R20" H 1870 1396 50  0000 L CNN
+F 1 "560Ω" H 1870 1305 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" V 1730 1350 50  0001 C CNN
+F 3 "~" H 1800 1350 50  0001 C CNN
+	1    1800 1350
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	1800 1500 1800 1900
+Wire Wire Line
+	1800 1900 2900 1900
+Wire Wire Line
+	2900 1900 2900 1000
+Wire Wire Line
+	2900 1000 2800 1000
+Connection ~ 2800 1000
+Wire Wire Line
+	1150 1500 2100 1500
+Wire Wire Line
+	1100 4850 1200 4850
+Wire Wire Line
+	1200 4850 1200 4900
+Wire Wire Line
+	1200 4900 1350 4900
+Wire Wire Line
+	1350 4700 1200 4700
+Wire Wire Line
+	1200 4700 1200 4750
+Wire Wire Line
+	1200 4750 1100 4750
+$Comp
+L Device:C C6
+U 1 1 5E60986F
+P 1300 5250
+F 0 "C6" H 1185 5204 50  0000 R CNN
+F 1 "100nf" H 1185 5295 50  0000 R CNN
+F 2 "Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm" H 1338 5100 50  0001 C CNN
+F 3 "~" H 1300 5250 50  0001 C CNN
+	1    1300 5250
+	-1   0    0    1   
+$EndComp
+Connection ~ 1300 5100
+Wire Wire Line
+	1750 5300 1750 5400
+Wire Wire Line
+	1750 5400 1300 5400
+Connection ~ 1750 5400
+$Comp
+L Device:C C7
+U 1 1 5E62B12B
+P 2150 5250
+F 0 "C7" H 2265 5296 50  0000 L CNN
+F 1 "100nF" H 2265 5205 50  0000 L CNN
+F 2 "Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm" H 2188 5100 50  0001 C CNN
+F 3 "~" H 2150 5250 50  0001 C CNN
+	1    2150 5250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2150 4900 2250 4900
+Wire Wire Line
+	2250 4700 2150 4700
+Wire Wire Line
+	1850 4300 2150 4300
+Connection ~ 1850 4300
+Wire Wire Line
+	2150 5400 1750 5400
+Wire Wire Line
+	2150 4300 2150 5100
+$Comp
+L power:+3.3V #PWR?
+U 1 1 5E5F2BB0
+P 9850 3450
+F 0 "#PWR?" H 9850 3300 50  0001 C CNN
+F 1 "+3.3V" H 9865 3623 50  0000 C CNN
+F 2 "" H 9850 3450 50  0001 C CNN
+F 3 "" H 9850 3450 50  0001 C CNN
+	1    9850 3450
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
