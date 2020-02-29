@@ -9,18 +9,18 @@
 #include <Adafruit_SSD1306.h>
 #include "definitions.h"
 
-//#define USE_SSD1306
-//#define USE_NEOPIXEL
+#define USE_SSD1306
+#define USE_NEOPIXEL
 //#define USE_SERIAL
 //#define USE_LIPO
-//#define USE_EXTERNAL_AREF
+#define USE_EXTERNAL_AREF
 
 /*
  * If your display stays white, uncomment this.
  * Cut reset trace (on THT on upper layer/0R), connect STBY_NO (A1) with reset of TFT (at 4050).
  * See also readme in mechanical folder for reference.
  */
-//#define USE_TFT_RESET
+#define USE_TFT_RESET
 
 /*
  * If red is blue and blue is red change this
@@ -60,6 +60,7 @@ boolean power_down = false;
 uint16_t charge = 0;
 float adc_offset = ADC_TO_TEMP_OFFSET;
 float adc_gain = ADC_TO_TEMP_GAIN;
+uint16_t adc;
 
 #define RGB_DISP 0x0
 #define BGR_DISP 0x2
@@ -311,7 +312,7 @@ uint16_t median(uint8_t analogIn) {
 
 int getTemperature(void) {
 	analogRead(TEMP_SENSE);//Switch ADC MUX
-	uint16_t adc = median(TEMP_SENSE);
+	adc = median(TEMP_SENSE);
 
 	if (adc >= 900) { //Illegal value, tip not plugged in - would be around 560deg
 		analogWrite(HEATER_PWM, 0);
@@ -648,6 +649,10 @@ void tft_display(void) {
 				tft.setTextColor(TFT_YELLOW, TFT_BLACK);
 				tft.print(F("STBY  "));
 			} else {
+				uint8_t height = 64;
+				uint8_t width = 10;
+				uint8_t origin_x = 149;
+				uint8_t	origin_y = 24;
 				old_stby = false;
 				set_t_old = set_t;
 				tft.setTextColor(TFT_WHITE, TFT_BLACK);
@@ -655,8 +660,12 @@ void tft_display(void) {
 				printTemp(set_t);
 				tft.write(247);
 				tft.write(fahrenheit?'F':'C');
-				tft.fillTriangle(149, 50, 159, 50, 154, 38, (set_t < TEMP_MAX) ? TFT_WHITE : TFT_GRAY);
-				tft.fillTriangle(149, 77, 159, 77, 154, 90, (set_t > TEMP_MIN) ? TFT_WHITE : TFT_GRAY);
+				//tft.fillTriangle(origin_x, origin_y, origin_x + width, origin_y, origin_x + width, origin_y + height, TFT_GRAY);
+				uint8_t y = (set_t - TEMP_MIN) * height / (TEMP_MAX - TEMP_MIN);
+				uint8_t x = y * width / height;
+				tft.fillTriangle(origin_x + width - x, origin_y + height - y, origin_x + width, origin_y + height - y, origin_x + width, origin_y + height, TFT_WHITE);
+				tft.fillTriangle(origin_x + width - x, origin_y + height - y, origin_x, origin_y, origin_x + width, origin_y, TFT_GRAY);
+				tft.fillTriangle(origin_x + width - x, origin_y + height - y, origin_x + width, origin_y, origin_x + width, origin_y + height - y, TFT_GRAY);
 			}
 		}
 		if (!off) {
@@ -1107,9 +1116,9 @@ int main(void) {
 			oled.setTextSize(1);
 			oled.setTextColor(WHITE);
 			oled.setCursor(0,0);
-			oled.println(set_t - cur_t); // temperature
+			oled.println(cur_t); // temperature
 			oled.setCursor(0,10);
-			oled.println(pid_val); // pid
+			oled.println(adc); // adc
 			oled.setCursor(0,20);
 			oled.println(pwm); // pwm
 			// graph
@@ -1139,7 +1148,9 @@ int main(void) {
 		Serial.print(" ");
 		Serial.print(255);
 		Serial.print(" ");
-		Serial.println(pwm);
+		Serial.print(pwm);
+		Serial.print(" ");
+		Serial.println(cur_t);
 
 		// original code
 		// Serial.print(stored[0]);
