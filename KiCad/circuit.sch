@@ -1,12 +1,13 @@
 EESchema Schematic File Version 4
+LIBS:circuit-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "soldering station"
-Date "2020-02-28"
-Rev "1.0.1"
+Date "2020-03-01"
+Rev "1.0.4"
 Comp "(c) by KARL"
 Comment1 ""
 Comment2 ""
@@ -82,13 +83,13 @@ $EndComp
 $Comp
 L Device:R R10
 U 1 1 5E5093D0
-P 5400 3750
-F 0 "R10" H 5470 3796 50  0000 L CNN
-F 1 "R" H 5470 3705 50  0000 L CNN
-F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" V 5330 3750 50  0001 C CNN
-F 3 "~" H 5400 3750 50  0001 C CNN
-	1    5400 3750
-	-1   0    0    1   
+P 5850 3600
+F 0 "R10" H 5920 3646 50  0000 L CNN
+F 1 "R" H 5920 3555 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" V 5780 3600 50  0001 C CNN
+F 3 "~" H 5850 3600 50  0001 C CNN
+	1    5850 3600
+	0    -1   -1   0   
 $EndComp
 $Comp
 L Device:R R5
@@ -176,17 +177,6 @@ F 1 "5,6kΩ" V 9466 1650 50  0000 C CNN
 F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" V 9280 1650 50  0001 C CNN
 F 3 "~" H 9350 1650 50  0001 C CNN
 	1    9350 1650
-	0    -1   -1   0   
-$EndComp
-$Comp
-L Device:LED D1
-U 1 1 5E511A9F
-P 5400 4050
-F 0 "D1" H 5393 4266 50  0000 C CNN
-F 1 "LED" H 5393 4175 50  0000 C CNN
-F 2 "Diode_THT:D_DO-15_P2.54mm_Vertical_AnodeUp" H 5400 4050 50  0001 C CNN
-F 3 "~" H 5400 4050 50  0001 C CNN
-	1    5400 4050
 	0    -1   -1   0   
 $EndComp
 Wire Wire Line
@@ -609,12 +599,12 @@ Pow
 $Comp
 L power:GNDD #PWR0113
 U 1 1 5E695AE0
-P 5400 4200
-F 0 "#PWR0113" H 5400 3950 50  0001 C CNN
-F 1 "GNDD" H 5404 4045 50  0000 C CNN
-F 2 "" H 5400 4200 50  0001 C CNN
-F 3 "" H 5400 4200 50  0001 C CNN
-	1    5400 4200
+P 6000 4200
+F 0 "#PWR0113" H 6000 3950 50  0001 C CNN
+F 1 "GNDD" H 6004 4045 50  0000 C CNN
+F 2 "" H 6000 4200 50  0001 C CNN
+F 3 "" H 6000 4200 50  0001 C CNN
+	1    6000 4200
 	1    0    0    -1  
 $EndComp
 Text Notes 950  3050 0    50   ~ 0
@@ -882,28 +872,6 @@ Text GLabel 5400 2500 2    50   Input ~ 0
 SDA
 Text GLabel 5400 2600 2    50   Input ~ 0
 SCL
-$Comp
-L power:GNDD #PWR0118
-U 1 1 5E7B2A21
-P 1100 4950
-F 0 "#PWR0118" H 1100 4700 50  0001 C CNN
-F 1 "GNDD" H 1104 4795 50  0000 C CNN
-F 2 "" H 1100 4950 50  0001 C CNN
-F 3 "" H 1100 4950 50  0001 C CNN
-	1    1100 4950
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:+5V #PWR0119
-U 1 1 5E7B32F9
-P 1100 4650
-F 0 "#PWR0119" H 1100 4500 50  0001 C CNN
-F 1 "+5V" H 1115 4823 50  0000 C CNN
-F 2 "" H 1100 4650 50  0001 C CNN
-F 3 "" H 1100 4650 50  0001 C CNN
-	1    1100 4650
-	1    0    0    -1  
-$EndComp
 Text GLabel 2250 4700 2    50   Input ~ 0
 SDA
 Text GLabel 2250 4900 2    50   Input ~ 0
@@ -918,17 +886,6 @@ F 2 "Package_DIP:DIP-28_W7.62mm" H 4800 2400 50  0001 C CIN
 F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/ATmega328_P%20AVR%20MCU%20with%20picoPower%20Technology%20Data%20Sheet%2040001984A.pdf" H 4800 2400 50  0001 C CNN
 	1    4800 2400
 	1    0    0    -1  
-$EndComp
-$Comp
-L MCU_Module:Arduino_Nano_v3.x A1
-U 1 1 5E6720CF
-P 4850 5900
-F 0 "A1" H 4850 4811 50  0000 C CNN
-F 1 "Arduino_Nano_v3.x" H 4850 4720 50  0000 C CNN
-F 2 "Module:Arduino_Nano" H 5000 4950 50  0001 L CNN
-F 3 "http://www.mouser.com/pdfdocs/Gravitech_Arduino_Nano3_0.pdf" H 4850 4900 50  0001 C CNN
-	1    4850 5900
-	-1   0    0    1   
 $EndComp
 Wire Wire Line
 	9850 4300 9850 5200
@@ -1012,9 +969,6 @@ Wire Wire Line
 	10000 5300 10150 5300
 Wire Wire Line
 	4800 3900 4800 4200
-Wire Wire Line
-	4800 4200 5400 4200
-Connection ~ 5400 4200
 $Comp
 L power:+5V #PWR0110
 U 1 1 5E5CCF95
@@ -1132,17 +1086,6 @@ F 3 "" H 9900 1050 50  0001 C CNN
 $EndComp
 Text Notes 2100 3050 0    50   ~ 0
 Power supply
-$Comp
-L Connector:Conn_01x04_Male J8
-U 1 1 5E61C092
-P 900 4750
-F 0 "J8" H 1008 5031 50  0000 C CNN
-F 1 "I2C" H 1008 4940 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical" H 900 4750 50  0001 C CNN
-F 3 "~" H 900 4750 50  0001 C CNN
-	1    900  4750
-	1    0    0    -1  
-$EndComp
 Wire Notes Line
 	750  3300 2500 3300
 Wire Notes Line
@@ -1169,41 +1112,9 @@ Wire Notes Line
 	750  7600 750  5750
 Text Notes 850  7500 0    50   ~ 0
 Input
-NoConn ~ 10600 1750
 Wire Wire Line
 	4900 900  4800 900 
 Connection ~ 4800 900 
-NoConn ~ 4750 4900
-NoConn ~ 4850 4900
-NoConn ~ 5350 5200
-NoConn ~ 5350 5300
-NoConn ~ 5350 5400
-NoConn ~ 5350 5500
-NoConn ~ 5350 5600
-NoConn ~ 5350 5700
-NoConn ~ 5350 5800
-NoConn ~ 5350 5900
-NoConn ~ 5350 6000
-NoConn ~ 5350 6150
-NoConn ~ 5350 6200
-NoConn ~ 5350 6100
-NoConn ~ 5350 6300
-NoConn ~ 5350 6400
-NoConn ~ 5350 6500
-NoConn ~ 4950 6900
-NoConn ~ 4750 6900
-NoConn ~ 4650 6900
-NoConn ~ 4350 6500
-NoConn ~ 4350 6400
-NoConn ~ 4350 6100
-NoConn ~ 4350 5900
-NoConn ~ 4350 5800
-NoConn ~ 4350 5700
-NoConn ~ 4350 5600
-NoConn ~ 4350 5500
-NoConn ~ 4350 5400
-NoConn ~ 4350 5300
-NoConn ~ 4350 5200
 $Comp
 L Device:C C3
 U 1 1 5E8352FE
@@ -1375,18 +1286,6 @@ Wire Wire Line
 Connection ~ 2800 1000
 Wire Wire Line
 	1150 1500 2100 1500
-Wire Wire Line
-	1100 4850 1200 4850
-Wire Wire Line
-	1200 4850 1200 4900
-Wire Wire Line
-	1200 4900 1350 4900
-Wire Wire Line
-	1350 4700 1200 4700
-Wire Wire Line
-	1200 4700 1200 4750
-Wire Wire Line
-	1200 4750 1100 4750
 $Comp
 L Device:C C6
 U 1 1 5E60986F
@@ -1427,14 +1326,159 @@ Wire Wire Line
 Wire Wire Line
 	2150 4300 2150 5100
 $Comp
-L power:+3.3V #PWR?
+L power:+3.3V #PWR0104
 U 1 1 5E5F2BB0
 P 9850 3450
-F 0 "#PWR?" H 9850 3300 50  0001 C CNN
+F 0 "#PWR0104" H 9850 3300 50  0001 C CNN
 F 1 "+3.3V" H 9865 3623 50  0000 C CNN
 F 2 "" H 9850 3450 50  0001 C CNN
 F 3 "" H 9850 3450 50  0001 C CNN
 	1    9850 3450
 	1    0    0    -1  
 $EndComp
+$Comp
+L Connector_Generic:Conn_01x24 Prototype1
+U 1 1 5E5DA727
+P 4750 5750
+F 0 "Prototype1" V 4875 5696 50  0000 C CNN
+F 1 "Conn_01x24" V 4966 5696 50  0000 C CNN
+F 2 "my:Proto1x24" H 4750 5750 50  0001 C CNN
+F 3 "~" H 4750 5750 50  0001 C CNN
+	1    4750 5750
+	-1   0    0    -1  
+$EndComp
+Text GLabel 4950 5550 2    50   Input ~ 0
+SDA
+Text GLabel 4950 5450 2    50   Input ~ 0
+SCL
+Text GLabel 4950 6250 2    50   Input ~ 0
+BL
+Text GLabel 4950 6150 2    50   Input ~ 0
+TFT-RST
+Text GLabel 4950 5850 2    50   Input ~ 0
+Sensor
+Text GLabel 4950 6350 2    50   Input ~ 0
+Res
+Text GLabel 4950 5950 2    50   Input ~ 0
+Tip
+Wire Wire Line
+	4950 6750 4950 6850
+Connection ~ 4950 6850
+Wire Wire Line
+	4950 6850 4950 6950
+Connection ~ 4950 6950
+Wire Wire Line
+	4950 6950 4950 7050
+Connection ~ 4950 4650
+Wire Wire Line
+	4950 4650 4950 4550
+Connection ~ 4950 4750
+Wire Wire Line
+	4950 4750 4950 4650
+Wire Wire Line
+	4950 4850 4950 4750
+$Comp
+L power:GNDD #PWR0108
+U 1 1 5E64E3DC
+P 4950 7050
+F 0 "#PWR0108" H 4950 6800 50  0001 C CNN
+F 1 "GNDD" H 4954 6895 50  0000 C CNN
+F 2 "" H 4950 7050 50  0001 C CNN
+F 3 "" H 4950 7050 50  0001 C CNN
+	1    4950 7050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0111
+U 1 1 5E64F00C
+P 4950 4550
+F 0 "#PWR0111" H 4950 4400 50  0001 C CNN
+F 1 "+5V" H 4965 4723 50  0000 C CNN
+F 2 "" H 4950 4550 50  0001 C CNN
+F 3 "" H 4950 4550 50  0001 C CNN
+	1    4950 4550
+	1    0    0    -1  
+$EndComp
+$Comp
+L LED:NeoPixel_THT D1
+U 1 1 5E6743B6
+P 6900 3600
+F 0 "D1" H 7244 3646 50  0000 L CNN
+F 1 "NeoPixel_THT" H 7244 3555 50  0000 L CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 6950 3300 50  0001 L TNN
+F 3 "https://www.adafruit.com/product/1938" H 7000 3225 50  0001 L TNN
+	1    6900 3600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6900 3900 6900 4200
+Wire Wire Line
+	4950 5150 4950 5050
+Wire Wire Line
+	4950 4950 5150 4950
+Connection ~ 4950 4950
+Connection ~ 4950 5050
+Wire Wire Line
+	4950 5050 4950 4950
+$Comp
+L power:+3.3V #PWR0126
+U 1 1 5E6E9231
+P 5150 4950
+F 0 "#PWR0126" H 5150 4800 50  0001 C CNN
+F 1 "+3.3V" H 5165 5123 50  0000 C CNN
+F 2 "" H 5150 4950 50  0001 C CNN
+F 3 "" H 5150 4950 50  0001 C CNN
+	1    5150 4950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5400 3600 5600 3600
+Wire Wire Line
+	4950 5650 5600 5650
+Wire Wire Line
+	5600 5650 5600 3600
+Connection ~ 5600 3600
+Wire Wire Line
+	5600 3600 5700 3600
+Wire Wire Line
+	7200 3600 7200 5750
+NoConn ~ 4950 6450
+NoConn ~ 4950 6550
+NoConn ~ 4950 6650
+Wire Wire Line
+	4800 4200 6000 4200
+Wire Wire Line
+	6900 4200 6000 4200
+Connection ~ 6000 4200
+Wire Wire Line
+	6000 3600 6600 3600
+Wire Wire Line
+	7200 5750 4950 5750
+Text GLabel 1250 4700 0    50   Input ~ 0
+SDA5V
+Text GLabel 1250 4900 0    50   Input ~ 0
+SCL5V
+Wire Wire Line
+	1250 4700 1350 4700
+Wire Wire Line
+	1250 4900 1350 4900
+Text GLabel 4950 5250 2    50   Input ~ 0
+SDA5V
+Text GLabel 4950 5350 2    50   Input ~ 0
+SCL5V
+$Comp
+L power:+5V #PWR0125
+U 1 1 5E6D7FA6
+P 6900 3300
+F 0 "#PWR0125" H 6900 3150 50  0001 C CNN
+F 1 "+5V" H 6915 3473 50  0000 C CNN
+F 2 "" H 6900 3300 50  0001 C CNN
+F 3 "" H 6900 3300 50  0001 C CNN
+	1    6900 3300
+	1    0    0    -1  
+$EndComp
+Text GLabel 10600 1750 0    50   Input ~ 0
+Tip2
+Text GLabel 4950 6050 2    50   Input ~ 0
+Tip2
 $EndSCHEMATC
