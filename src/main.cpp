@@ -8,33 +8,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include "definitions.h"
-
 #include "config.h"
-
-///#define USE_SSD1306
-///#define USE_NEOPIXEL
-//#define USE_SERIAL
-//#define USE_LIPO
-///#define USE_EXTERNAL_AREF
-
-/*
- * If your display stays white, uncomment this.
- * Cut reset trace (on THT on upper layer/0R), connect STBY_NO (A1) with reset of TFT (at 4050).
- * See also readme in mechanical folder for reference.
- */
-///#define USE_TFT_RESET
-
-/*
- * If red is blue and blue is red change this
- * If not sure, leave commented, you will be shown a setup screen
- */
-///#define HARDWARE_DEFINED_TFT 	1
-///#define HARDWARE_REVISION 		3
-
-/*
- * Only used for testing, do not use.
- */
-//#define INSTALL
 
 volatile boolean off = true, stby = true, stby_layoff = false, clear_display = true, store_invalid = true, menu = false;
 volatile uint8_t pwm, threshold_counter;
@@ -64,38 +38,37 @@ float adc_offset = ADC_TO_TEMP_OFFSET;
 float adc_gain = ADC_TO_TEMP_GAIN;
 uint16_t adc;
 
-///#define RGB_DISP 0x0
-///#define BGR_DISP 0x2
+#define RGB_DISP 0x0
+#define BGR_DISP 0x2
 
 #ifdef USE_TFT_RESET
 TFT_ILI9163C tft = TFT_ILI9163C(TFT_CS,  TFT_DC, STBY_NO);
 #else
 TFT_ILI9163C tft = TFT_ILI9163C(TFT_CS,  TFT_DC);
 #endif
+#define	TFT_BLACK   0x0000
+#define	TFT_BLUE    0x001F
+#define	TFT_RED     0xF800
+#define	TFT_GREEN   0x07E0
+#define TFT_CYAN    0x07FF
+#define TFT_MAGENTA 0xF81F
+#define TFT_YELLOW  0xFFE0
+#define TFT_WHITE   0xFFFF
+#define TFT_GRAY    0x94B2
 
-/// #define	TFT_BLACK   0x0000
-/// #define	TFT_BLUE    0x001F
-/// #define	TFT_RED     0xF800
-/// #define	TFT_GREEN   0x07E0
-/// #define TFT_CYAN    0x07FF
-/// #define TFT_MAGENTA 0xF81F
-/// #define TFT_YELLOW  0xFFE0
-/// #define TFT_WHITE   0xFFFF
-/// #define TFT_GRAY    0x94B2
+#define RE_NONE  0
+#define RE_LEFT1 1
+#define RE_LEFT2 2
+#define RE_LEFT3 3
+#define RE_RIGHT1  4
+#define RE_RIGHT2  5
+#define RE_RIGHT3  6
 
-/// #define RE_NONE  0
-/// #define RE_LEFT1 1
-/// #define RE_LEFT2 2
-/// #define RE_LEFT3 3
-/// #define RE_RIGHT1  4
-/// #define RE_RIGHT2  5
-/// #define RE_RIGHT3  6
-
-/// #define STBY_LIGTHNESS_MAX 	96
-/// #define STBY_LIGTHNESS_MIN 	32
-/// #define STBY_LIGTHNESS_STEP 1
-/// #define NEO_BRIGHTNESS 		32
-/// #define NUM_LED 			12
+#define STBY_LIGTHNESS_MAX 	96
+#define STBY_LIGTHNESS_MIN 	32
+#define STBY_LIGTHNESS_STEP 1
+#define NEO_BRIGHTNESS 		32
+#define NUM_LED 			12
 
 PID heaterPID(&cur_td, &pid_val, &set_td, kp, ki, kd, DIRECT);
 
@@ -103,12 +76,12 @@ PID heaterPID(&cur_td, &pid_val, &set_td, kp, ki, kd, DIRECT);
 	Adafruit_NeoPixel neo_ring = Adafruit_NeoPixel(NUM_LED, NEOPIXEL, NEO_GRB + NEO_KHZ800);
 #endif
 
-/// #define OLED_SCREEN_WIDTH	128
-/// #define OLED_SCREEN_HEIGHT	32
-/// #define OLED_SCREEN_OFFSET 	32
-/// #define OLED_SCREEN_DIVIDER	1
-/// #define OLED_RESET 			4
-/// #define OLED_ADDR 			0x3C
+#define OLED_SCREEN_WIDTH	128
+#define OLED_SCREEN_HEIGHT	32
+#define OLED_SCREEN_OFFSET 	32
+#define OLED_SCREEN_DIVIDER	1
+#define OLED_RESET 			4
+#define OLED_ADDR 			0x3C
 
 #ifdef USE_SSD1306
 Adafruit_SSD1306 oled(OLED_SCREEN_WIDTH, OLED_SCREEN_HEIGHT, &Wire, OLED_RESET);
@@ -317,7 +290,7 @@ int getTemperature(void) {
 	analogRead(TEMP_SENSE);//Switch ADC MUX
 	adc = median(TEMP_SENSE);
 
-	if (adc >= 900) { //Illegal value, tip not plugged in - would be around 560deg
+	if (adc >= 1000) { //Illegal value, tip not plugged in
 		analogWrite(HEATER_PWM, 0);
 		if (!off)
 			setError(NO_TIP);
@@ -325,7 +298,6 @@ int getTemperature(void) {
 	} else {
 		analogWrite(HEATER_PWM, pwm); //switch heater back to last value
 	}
-	//return round(adc < 210 ? (((float)adc) * 0.540805) : (((float)adc) * 0.4163 + 30));
 	return round(((float) adc) * adc_gain + adc_offset);
 }
 
@@ -564,8 +536,8 @@ void powerDown(void) {
 	tft.print("OFF");
 	delay(3000);
 	SPI.end();
-	digitalWrite(POWER, LOW);
-	pinMode(POWER, OUTPUT);
+	//digitalWrite(POWER, LOW);
+	//pinMode(POWER, OUTPUT);
 	delay(100);
 	force_redraw = true;
 	power_down = false;
@@ -823,7 +795,7 @@ void setup(void) {
 #endif
 	digitalWrite(HEATER_PWM, LOW);
 	pinMode(HEATER_PWM, OUTPUT);
-	pinMode(POWER, INPUT_PULLUP);
+	//pinMode(POWER, INPUT_PULLUP);
 #ifdef USE_NEOPIXEL
 	pinMode(NEOPIXEL, OUTPUT);
 	neo_ring.begin();
@@ -1119,13 +1091,16 @@ int main(void) {
 			oled.setTextSize(1);
 			oled.setTextColor(WHITE);
 			oled.setCursor(0,0);
+			oled.print("TEMP: ");
 			oled.println(cur_t); // temperature
 			oled.setCursor(0,10);
+			oled.print("ADC : ");
 			oled.println(adc); // adc
 			oled.setCursor(0,20);
-			oled.println(pwm); // pwm
+			oled.print("GAIN: ");
+			oled.println(adc_gain); // pwm
 			// graph
-			for (int i = 0; i < OLED_SCREEN_WIDTH - OLED_SCREEN_OFFSET; i++) {
+			/*for (int i = 0; i < OLED_SCREEN_WIDTH - OLED_SCREEN_OFFSET; i++) {
 				uint8_t pixelColor = SSD1306_WHITE;
 				if (oled_buffer[i] > 0) {
 					oled.drawPixel(i + OLED_SCREEN_OFFSET, OLED_SCREEN_HEIGHT - 1 - oled_buffer[i], SSD1306_WHITE);
@@ -1142,7 +1117,7 @@ int main(void) {
 				if (value >= OLED_SCREEN_HEIGHT) value = OLED_SCREEN_HEIGHT - 1;
 				oled_buffer[0] = value;
 				oled_buffer_index = 0;
-			} else oled_buffer_index++;
+			} else oled_buffer_index++;*/
 			oled.display();
 #endif
 		tft_display();

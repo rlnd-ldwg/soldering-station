@@ -1,9 +1,8 @@
 #define USE_SSD1306
-#define USE_NEOPIXEL
+//#define USE_NEOPIXEL
 //#define USE_SERIAL
 //#define USE_LIPO
 #define USE_EXTERNAL_AREF
-
 /*
  * If your display stays white, uncomment this.
  * Cut reset trace (on THT on upper layer/0R), connect STBY_NO (A1) with reset of TFT (at 4050).
@@ -52,7 +51,7 @@
 #define NEO_BRIGHTNESS 		32
 #define NUM_LED 			12
 
-// oled ????
+// oled display
 #define OLED_SCREEN_WIDTH	128
 #define OLED_SCREEN_HEIGHT	32
 #define OLED_SCREEN_OFFSET 	32

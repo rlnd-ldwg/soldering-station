@@ -11,7 +11,7 @@
 #define TEMP_MAX    450
 #define TEMP_MIN    200
 #define TEMP_STBY   150
-#define TEMP_COLD   (adc_offset + 15)
+#define TEMP_COLD   75
 
 #define SHUTOFF_ACTIVE
 #define BOOTHEAT_ACTIVE
@@ -28,21 +28,19 @@
 //Time in that the temperature must rise by the set temperature
 #define TEMP_RISE_TIME      1000
 
-#define SW_T3       0
+#define SW_T1       0
 #define SW_T2       1
-#define SW_T1       12
-#define HEATER_PWM  3
-#define SW_UP       4
-#define RE_DT 		4
-#define SW_DOWN     5
-#define RE_CLK 		5
 #define SW_STBY     2
+#define HEATER_PWM  3
+#define RE_DT 		4
+#define RE_CLK 		5
+//#define SW_T1       6
 #define NEOPIXEL	7
 #define HEAT_LED	7
 #define STBY_NO		8
 #define TFT_DC      9
 #define TFT_CS      10
-#define POWER       12
+#define SW_T3       12
 #define TEMP_SENSE	A0
 #define BAT_C3      A1
 #define BAT_C2      A2
@@ -63,8 +61,8 @@
 #define DELAY_MAIN_LOOP             10
 #define PID_SAMPLE_TIME             10
 
-#define ADC_TO_TEMP_GAIN             0.54 //default value if no calibration is performed
-#define ADC_TO_TEMP_OFFSET          42.8  //default value if no calibration is performed
+#define ADC_TO_TEMP_GAIN           	0.34 //default value if no calibration is performed
+#define ADC_TO_TEMP_OFFSET          26.0  //default value if no calibration is performed
 
 #define EEPROM_SET_T     8
 #define EEPROM_VERSION  10
