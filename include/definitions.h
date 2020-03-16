@@ -34,10 +34,10 @@
 #define HEATER_PWM  3
 #define RE_DT 		4
 #define RE_CLK 		5
-//#define SW_T1       6
+//#define SW_T1       6     // optional TFT brightness (PWM)
 #define NEOPIXEL	7
 #define HEAT_LED	7
-#define STBY_NO		8
+#define STBY_NO		8      // optional TFT hardware reset
 #define TFT_DC      9
 #define TFT_CS      10
 #define SW_T3       12
@@ -45,7 +45,7 @@
 #define BAT_C3      A1
 #define BAT_C2      A2
 #define BAT_C1      A3
-#ifdef PIN_A7
+#ifdef PIN_A7       // only 32 pin ATmega328
 #define CHARGEDET   A6
 #define VIN         A7
 #endif
