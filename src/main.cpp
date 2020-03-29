@@ -340,12 +340,12 @@ void rotary_encoder() {
 		if (clk == LOW && dt == HIGH) {
 			 if (re_state == RE_NONE) {re_state = RE_RIGHT1;}
 			 else if (re_state == RE_LEFT2) {
-				// temp +
+				// temp -
 				re_state = RE_LEFT3;
 				setStandby(false);
-				if (now - re_millis < 100) set_t += 10;
-				else set_t += 5;
-				if(set_t > TEMP_MAX) set_t = TEMP_MAX;
+                if (now - re_millis < 100) set_t -= 10;
+				else set_t -= 5;
+				if (set_t < TEMP_MIN) set_t = TEMP_MIN;
 				re_millis = now;
 				updateEEPROM();
 			 }
@@ -358,12 +358,12 @@ void rotary_encoder() {
 
 	   	if (clk == HIGH && dt == LOW) {
 		 	if (re_state == RE_RIGHT2) {
-				// temp -
+				// temp +
 			 	re_state = RE_RIGHT3;
 			 	setStandby(false);
-				if (now - re_millis < 100) set_t -= 10;
-				else set_t -= 5;
-				if (set_t < TEMP_MIN) set_t = TEMP_MIN;
+                if (now - re_millis < 100) set_t += 10;
+				else set_t += 5;
+				if(set_t > TEMP_MAX) set_t = TEMP_MAX;
 				re_millis = now;
 			 	updateEEPROM();
 		 	}

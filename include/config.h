@@ -1,14 +1,14 @@
-#define USE_SSD1306
-//#define USE_NEOPIXEL
+//#define USE_SSD1306
+#define USE_NEOPIXEL
 //#define USE_SERIAL
 //#define USE_LIPO
-#define USE_EXTERNAL_AREF
+//#define USE_EXTERNAL_AREF
 /*
  * If your display stays white, uncomment this.
  * Cut reset trace (on THT on upper layer/0R), connect STBY_NO (A1) with reset of TFT (at 4050).
  * See also readme in mechanical folder for reference.
  */
-#define USE_TFT_RESET
+//#define USE_TFT_RESET
 
 /*
  * If red is blue and blue is red change this
@@ -49,7 +49,7 @@
 #define STBY_LIGTHNESS_MIN 	32
 #define STBY_LIGTHNESS_STEP 1
 #define NEO_BRIGHTNESS 		32
-#define NUM_LED 			12
+#define NUM_LED 			8
 
 // oled display
 #define OLED_SCREEN_WIDTH	128

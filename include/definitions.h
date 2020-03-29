@@ -28,7 +28,7 @@
 //Time in that the temperature must rise by the set temperature
 #define TEMP_RISE_TIME      1000
 
-#define SW_T1       0
+#define SW_T1       12
 #define SW_T2       1
 #define SW_STBY     2
 #define HEATER_PWM  3
@@ -40,7 +40,7 @@
 #define STBY_NO		8      // optional TFT hardware reset
 #define TFT_DC      9
 #define TFT_CS      10
-#define SW_T3       12
+#define SW_T3       0
 #define TEMP_SENSE	A0
 #define BAT_C3      A1
 #define BAT_C2      A2

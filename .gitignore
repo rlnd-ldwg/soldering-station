@@ -29,6 +29,9 @@ Makefile
 # *.ods
 .~lock*
 # KiCAD
+
 *bak
 *fp-info-cache
 *-cache.lib
+sym-lib-table
+*-rescue.*
