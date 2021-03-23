@@ -12,3 +12,5 @@ features:
 * voltage converter for I2C interface
 
 for more information see the original README under README-MAISKOLBEN.md (german)
+
+Beim Drehenkoder müssen A und S1 getauscht werden!
